@@ -2,7 +2,9 @@ package de.germanycovid.discordbot.handlers;
 
 import de.germanycovid.discordbot.DiscordBot;
 import de.germanycovid.discordbot.commands.InfoCommand;
+import de.germanycovid.discordbot.commands.StatesCommand;
 import de.germanycovid.discordbot.commands.StatsCommand;
+import de.germanycovid.discordbot.commands.DistrictsCommand;
 import java.text.MessageFormat;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.events.ReadyEvent;
@@ -21,11 +23,15 @@ public class EventHandler extends ListenerAdapter {
     private final DiscordBot discordBot;
     private InfoCommand infoCommand;
     private StatsCommand statsCommand;
+    private StatesCommand statesCommand;
+    private DistrictsCommand districtsCommand;
     
     public EventHandler(DiscordBot discordBot) {
         this.discordBot = discordBot;
         this.infoCommand = new InfoCommand(discordBot);
         this.statsCommand = new StatsCommand(discordBot);
+        this.statesCommand = new StatesCommand(discordBot);
+        this.districtsCommand = new DistrictsCommand(discordBot);
     }
 
     @Override
@@ -51,6 +57,10 @@ public class EventHandler extends ListenerAdapter {
             infoCommand.execute(event);
         } else if (message.getContentRaw().toLowerCase().startsWith(prefix + "stats")) {
             statsCommand.execute(event);
+        } else if (message.getContentRaw().toLowerCase().startsWith(prefix + "states")) {
+            statesCommand.execute(event);
+        } else if (message.getContentRaw().toLowerCase().startsWith(prefix + "districts")) {
+            districtsCommand.execute(event);
         } else {
             return;
         }
