@@ -11,7 +11,6 @@ import de.germanycovid.discordbot.commands.HospitalCommand;
 import de.germanycovid.discordbot.commands.PrefixCommand;
 import java.text.MessageFormat;
 import net.dv8tion.jda.api.entities.Message;
-import net.dv8tion.jda.api.events.ReadyEvent;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
@@ -44,11 +43,6 @@ public class EventHandler extends ListenerAdapter {
         this.prefixCommand = new PrefixCommand(discordBot);
         this.channelCommand = new ChannelCommand(discordBot);
         this.helpCommand = new HelpCommand(discordBot);
-    }
-
-    @Override
-    public void onReady(ReadyEvent event) {
-
     }
 
     @Override
