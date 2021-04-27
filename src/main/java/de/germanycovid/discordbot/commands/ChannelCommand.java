@@ -29,7 +29,7 @@ public class ChannelCommand {
         if (args.length == 1) {
             EmbedBuilder embed = new EmbedBuilder();
             embed.setColor(new Color(235, 52, 94));
-            embed.setDescription("Lege einen Channel fest, in welchem die Commands ausschließlich verwendet werden sollen. Nutze hierfür ``c!channel <channel>``. Um den Channel aufzuheben, so verwende ``c!channel null``.");
+            embed.setDescription("Lege einen Channel fest, in welchem die Commands ausschließlich verwendet werden sollen. Nutze hierfür ``" + this.discord.getBackendManager().getPrefix(event.getGuild()) + "channel <channel>``. Um den Channel aufzuheben, so verwende ``" + this.discord.getBackendManager().getPrefix(event.getGuild()) + "channel null``.");
             this.discord.getBackendManager().sendMessage(event, embed.build());
             return;
         }
@@ -46,7 +46,7 @@ public class ChannelCommand {
         if (message.getMentionedChannels().isEmpty()) {
             EmbedBuilder embed = new EmbedBuilder();
             embed.setColor(new Color(235, 52, 94));
-            embed.setDescription("Lege einen Channel fest, in welchem die Commands ausschließlich verwendet werden sollen. Nutze hierfür ``c!channel <channel>``. Um den Channel aufzuheben, so verwende ``c!channel null``.");
+            embed.setDescription("Lege einen Channel fest, in welchem die Commands ausschließlich verwendet werden sollen. Nutze hierfür ``" + this.discord.getBackendManager().getPrefix(event.getGuild()) + "channel <channel>``. Um den Channel aufzuheben, so verwende ``" + this.discord.getBackendManager().getPrefix(event.getGuild()) + "channel null``.");
             this.discord.getBackendManager().sendMessage(event, embed.build());
             return;
         }
@@ -55,7 +55,7 @@ public class ChannelCommand {
         if (textChannel == null) {
             EmbedBuilder embed = new EmbedBuilder();
             embed.setColor(new Color(235, 52, 94));
-            embed.setDescription("Lege einen Channel fest, in welchem die Commands ausschließlich verwendet werden sollen. Nutze hierfür ``c!channel <channel>``. Um den Channel aufzuheben, so verwende ``c!channel null``.");
+            embed.setDescription("Lege einen Channel fest, in welchem die Commands ausschließlich verwendet werden sollen. Nutze hierfür ``" + this.discord.getBackendManager().getPrefix(event.getGuild()) + "channel <channel>``. Um den Channel aufzuheben, so verwende ``" + this.discord.getBackendManager().getPrefix(event.getGuild()) + "channel null``.");
             this.discord.getBackendManager().sendMessage(event, embed.build());
             return;
         }
@@ -63,7 +63,7 @@ public class ChannelCommand {
         this.discord.getBackendManager().setChannelId(event.getGuild(), textChannel.getId());
         EmbedBuilder embed = new EmbedBuilder();
         embed.setColor(new Color(235, 52, 94));
-        embed.setDescription("Dein Channel wurde erfolgreich übermittelt. Commands werden nun ausschließlich in " + textChannel.getAsMention() + " abgewickelt. Du möchtest diesen Channel aufheben? So verwende ``c!channel null``.");
+        embed.setDescription("Dein Channel wurde erfolgreich übermittelt. Commands werden nun ausschließlich in " + textChannel.getAsMention() + " abgewickelt. Du möchtest diesen Channel aufheben? So verwende ``" + this.discord.getBackendManager().getPrefix(event.getGuild()) + "channel null``.");
         this.discord.getBackendManager().sendMessage(event, embed.build());
     }
     

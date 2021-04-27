@@ -29,14 +29,14 @@ public class HelpCommand {
         embed.setColor(new Color(22, 115, 232));
         embed.setAuthor("» Hilfe", null, event.getJDA().getSelfUser().getAvatarUrl());
         embed.setDescription("Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et\n\n** **");
-        embed.addField("Befehle", "**c!info** - Hier findest Du Fakten und Informationen zum Bot.\n"
-                + "**c!stats** - Siehe die wichtigsten Daten für die Bundesrepublik.\n"
-                + "**c!states** - Finde die Daten für die Bundesländer\n"
-                + "**c!districts** - Finde die Daten für die 412 Landkreise bzw. Kreisfreien Städte\n"
-                + "**c!hospital** - Finde die wichtigsten Daten von den Intensivstationen.", false);
+        embed.addField("Befehle", "**" + this.discord.getBackendManager().getPrefix(event.getGuild()) + "info** - Hier findest Du Fakten und Informationen zum Bot.\n"
+                + "**" + this.discord.getBackendManager().getPrefix(event.getGuild()) + "stats** - Siehe die wichtigsten Daten für die Bundesrepublik.\n"
+                + "**" + this.discord.getBackendManager().getPrefix(event.getGuild()) + "states** - Finde die Daten für die Bundesländer\n"
+                + "**" + this.discord.getBackendManager().getPrefix(event.getGuild()) + "districts** - Finde die Daten für die 412 Landkreise bzw. Kreisfreien Städte\n"
+                + "**" + this.discord.getBackendManager().getPrefix(event.getGuild()) + "hospital** - Finde die wichtigsten Daten von den Intensivstationen.", false);
         if(this.discord.getBackendManager().checkForPermissions(event.getMember())) {
-            embed.addField("Admin Befehle", "**c!prefix [prefix]** - Änder den Prefix\n"
-                + "**c!channel [id]** - Gebe einen Channel an, wo nur noch Commands ausführbar sein sollen", false);
+            embed.addField("Admin Befehle", "**" + this.discord.getBackendManager().getPrefix(event.getGuild()) + "prefix [prefix]** - Änder den Prefix\n"
+                + "**" + this.discord.getBackendManager().getPrefix(event.getGuild()) + "channel [id]** - Gebe einen Channel an, wo nur noch Commands ausführbar sein sollen", false);
         }
         this.discord.getBackendManager().sendMessage(event, embed.build());
     }

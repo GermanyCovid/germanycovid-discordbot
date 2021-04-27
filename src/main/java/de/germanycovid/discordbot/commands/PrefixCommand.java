@@ -28,7 +28,7 @@ public class PrefixCommand {
         if (args.length == 1) {
             EmbedBuilder embed = new EmbedBuilder();
             embed.setColor(new Color(235, 52, 94));
-            embed.setDescription("Dein Prefix konnte leider nicht übermittelt werden. Um den Prefix zu ändern, nutze ``c!prefix <prefix>``.");
+            embed.setDescription("Dein Prefix konnte leider nicht übermittelt werden. Um den Prefix zu ändern, nutze ``" + this.discord.getBackendManager().getPrefix(event.getGuild()) + "prefix <prefix>``.");
             this.discord.getBackendManager().sendMessage(event, embed.build());
             return;
         }
@@ -36,7 +36,7 @@ public class PrefixCommand {
         if(this.discord.getBackendManager().getPrefix(event.getGuild()).equalsIgnoreCase(args[1])) {
             EmbedBuilder embed = new EmbedBuilder();
             embed.setColor(new Color(235, 52, 94));
-            embed.setDescription("Den Prefix, welchen du nun verwenden wolltest, ist dein derzeitiger Prefix. Um einen anderen Prefix zu nutzen, so verwende ``c!prefix <prefix>``.");
+            embed.setDescription("Den Prefix, welchen du nun verwenden wolltest, ist dein derzeitiger Prefix. Um einen anderen Prefix zu nutzen, so verwende ``" + this.discord.getBackendManager().getPrefix(event.getGuild()) + "prefix <prefix>``.");
             this.discord.getBackendManager().sendMessage(event, embed.build());
             return;
         }

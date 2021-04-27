@@ -33,7 +33,7 @@ public class StatesCommand {
         if (args.length == 1) {
             EmbedBuilder embed = new EmbedBuilder();
             embed.setColor(new Color(235, 52, 94));
-            embed.setDescription("Deine Anfrage konnte so nicht verarbeitet werden. Bitte spezifiziere deinen Command:\n\n``c!states map`` - Sie die Karte der Inzidenzen für alle Bundesländer\n``c!states <bundesland>`` - Sie detaillierte Informationen für dein Bundesland. Schreibe hierfür das Bundesland komplett aus oder nutze die amtlichen Abkürzungen (NW, BW, ...)");
+            embed.setDescription("Deine Anfrage konnte so nicht verarbeitet werden. Bitte spezifiziere deinen Command:\n\n``" + this.discord.getBackendManager().getPrefix(event.getGuild()) + "states map`` - Sie die Karte der Inzidenzen für alle Bundesländer\n``" + this.discord.getBackendManager().getPrefix(event.getGuild()) + "states <bundesland>`` - Sie detaillierte Informationen für dein Bundesland. Schreibe hierfür das Bundesland komplett aus oder nutze die amtlichen Abkürzungen (NW, BW, ...)");
             this.discord.getBackendManager().sendMessage(event, embed.build());
             return;
         }

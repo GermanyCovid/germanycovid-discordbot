@@ -33,7 +33,7 @@ public class DistrictsCommand {
         if (args.length == 1) {
             EmbedBuilder embed = new EmbedBuilder();
             embed.setColor(new Color(235, 52, 94));
-            embed.setDescription("Deine Anfrage konnte so nicht verarbeitet werden. Bitte spezifiziere deinen Command:\n\n``c!districts map`` - Sie die Karte der Inzidenzen für jeden Landkreis\n``c!districts <Stadt / Landkreis>`` - Sie detaillierte Informationen für dein Landkreis oder deine Kreisfreie Stadt. Schreibe hierfür die Stadt detailliert aus, um die Anfrage zu ermöglichen");
+            embed.setDescription("Deine Anfrage konnte so nicht verarbeitet werden. Bitte spezifiziere deinen Command:\n\n``" + this.discord.getBackendManager().getPrefix(event.getGuild()) + "districts map`` - Sie die Karte der Inzidenzen für jeden Landkreis\n``" + this.discord.getBackendManager().getPrefix(event.getGuild()) + "districts <Stadt / Landkreis>`` - Sie detaillierte Informationen für dein Landkreis oder deine Kreisfreie Stadt. Schreibe hierfür die Stadt detailliert aus, um die Anfrage zu ermöglichen");
             this.discord.getBackendManager().sendMessage(event, embed.build());
             return;
         }
