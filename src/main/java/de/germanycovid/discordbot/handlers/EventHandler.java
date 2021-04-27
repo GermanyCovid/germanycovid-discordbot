@@ -6,6 +6,7 @@ import de.germanycovid.discordbot.commands.InfoCommand;
 import de.germanycovid.discordbot.commands.StatesCommand;
 import de.germanycovid.discordbot.commands.StatsCommand;
 import de.germanycovid.discordbot.commands.DistrictsCommand;
+import de.germanycovid.discordbot.commands.HelpCommand;
 import de.germanycovid.discordbot.commands.HospitalCommand;
 import de.germanycovid.discordbot.commands.PrefixCommand;
 import java.text.MessageFormat;
@@ -31,6 +32,7 @@ public class EventHandler extends ListenerAdapter {
     private HospitalCommand hospitalCommand;
     private PrefixCommand prefixCommand;
     private ChannelCommand channelCommand;
+    private HelpCommand helpCommand;
     
     public EventHandler(DiscordBot discordBot) {
         this.discordBot = discordBot;
@@ -41,6 +43,7 @@ public class EventHandler extends ListenerAdapter {
         this.hospitalCommand = new HospitalCommand(discordBot);
         this.prefixCommand = new PrefixCommand(discordBot);
         this.channelCommand = new ChannelCommand(discordBot);
+        this.helpCommand = new HelpCommand(discordBot);
     }
 
     @Override
@@ -54,7 +57,7 @@ public class EventHandler extends ListenerAdapter {
         String prefix = this.discordBot.getBackendManager().getPrefix(event.getGuild());
         
         if (message.getMentionedUsers().stream().filter(t -> t.getId().equals(event.getGuild().getSelfMember().getId())).findFirst().orElse(null) != null) {
-            // HELP
+            helpCommand.execute(event);
             return;
         }
         
@@ -76,6 +79,8 @@ public class EventHandler extends ListenerAdapter {
             prefixCommand.execute(event);
         } else if (message.getContentRaw().toLowerCase().startsWith(prefix + "channel")) {
             channelCommand.execute(event);
+        } else if (message.getContentRaw().toLowerCase().startsWith(prefix + "help")) {
+            helpCommand.execute(event);
         } else {
             return;
         }
