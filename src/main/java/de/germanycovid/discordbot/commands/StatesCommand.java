@@ -1,11 +1,15 @@
 package de.germanycovid.discordbot.commands;
 
+import com.google.gson.internal.LinkedTreeMap;
 import de.germanycovid.discordbot.DiscordBot;
 import java.awt.Color;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
@@ -55,7 +59,40 @@ public class StatesCommand {
                 }
                 break;
             default:
-                
+                try {
+                    LinkedTreeMap<String, Object> state = null;
+                    if(args[1].length() == 2) {
+                        state = this.discord.getBackendManager().getStateByAbbreviation(args[1]);
+                    } else {
+                        state = this.discord.getBackendManager().getStateByName(args[1]);
+                    }
+                    if(state == null) {
+                        EmbedBuilder embed = new EmbedBuilder();
+                        embed.setColor(new Color(235, 52, 94));
+                        embed.setDescription("Dein Bundesland konnte leider nicht gefunden werden. Vergewissere dich, dass Du dieses richtig geschrieben hast. Sollte es an uns liegen, so schreibe uns bitte eine E-Mail (support@germanycovid.de).");
+                        this.discord.getBackendManager().sendMessage(event, embed.build());
+                        return;
+                    }
+                    LinkedTreeMap<String, Double> delta = (LinkedTreeMap<String, Double>) state.get("delta");
+                    EmbedBuilder embed = new EmbedBuilder();
+                    embed.setColor(new Color(22, 115, 232));
+                    embed.setDescription("** **\n\n");
+                    embed.setTitle("Statistiken für " + ((String) state.get("name")) + " (" + ((String) state.get("abbreviation")) + ")");
+                    embed.addField("Fälle", Math.round(Double.valueOf(String.valueOf(state.get("cases")))) + " (+" + Math.round(delta.get("cases")) + ")", true);
+                    embed.addField("Todesfälle", Math.round(Double.valueOf(String.valueOf(state.get("deaths")))) + " (+" + Math.round(delta.get("deaths")) + ")", true);
+                    embed.addField("Genesen", Math.round(Double.valueOf(String.valueOf(state.get("recovered")))) + " (+" + Math.round(delta.get("recovered")) + ")", true);
+                    embed.addField("Fälle pro Woche", "" + Math.round(Double.valueOf(String.valueOf(state.get("casesPerWeek")))), true);
+                    embed.addField("Todesfälle pro Woche", "" + Math.round(Double.valueOf(String.valueOf(state.get("deathsPerWeek")))), true);
+                    embed.addField("7-Tages-Inzidenz", "" + Math.round(Double.valueOf(String.valueOf(state.get("weekIncidence")))), true);
+                    embed.addField("Fälle pro 100k Einwohner", "" + Math.round(Double.valueOf(String.valueOf(state.get("casesPer100k")))), true);
+                    this.discord.getBackendManager().sendMessage(event, embed.build());
+                } catch (IOException ex) {
+                    EmbedBuilder embed = new EmbedBuilder();
+                    embed.setColor(new Color(235, 52, 94));
+                    embed.setDescription("Leider konnte deine Anfrage nicht bearbeitet werden. Sollte es an uns liegen, so schreibe uns bitte eine E-Mail (support@germanycovid.de).");
+                    this.discord.getBackendManager().sendMessage(event, embed.build());
+                    this.discord.consoleError("The states data for " + args[1].toLowerCase() + " could not be loaded.");
+                }
                 break;
         }
     }
