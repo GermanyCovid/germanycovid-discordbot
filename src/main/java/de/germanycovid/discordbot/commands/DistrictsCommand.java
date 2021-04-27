@@ -1,5 +1,6 @@
 package de.germanycovid.discordbot.commands;
 
+import com.google.gson.internal.LinkedTreeMap;
 import de.germanycovid.discordbot.DiscordBot;
 import java.awt.Color;
 import java.io.IOException;
@@ -55,7 +56,35 @@ public class DistrictsCommand {
                 }
                 break;
             default:
-                
+                try {
+                    LinkedTreeMap<String, Object> district = this.discord.getBackendManager().getDistrictsByName(message.getContentRaw().split(this.discord.getBackendManager().getPrefix(event.getGuild()) + "districts ")[1]);
+                    if (district == null) {
+                        EmbedBuilder embed = new EmbedBuilder();
+                        embed.setColor(new Color(235, 52, 94));
+                        embed.setDescription("Dein Landkreis bzw. deine kreisfreie Stadt konnte leider nicht gefunden werden. Vergewissere dich, dass du deinen Landkreis oder deine kreisfreie Stadt richtig geschrieben hast. Sollte es an uns liegen, so schreibe uns bitte eine E-Mail (support@germanycovid.de).");
+                        this.discord.getBackendManager().sendMessage(event, embed.build());
+                        return;
+                    }
+                    LinkedTreeMap<String, Double> delta = (LinkedTreeMap<String, Double>) district.get("delta");
+                    EmbedBuilder embed = new EmbedBuilder();
+                    embed.setColor(new Color(22, 115, 232));
+                    embed.setTitle("Statistiken für " + ((String) district.get("name")) + " (" + ((String) district.get("ags")) + ")");
+                    embed.setDescription("** **\n\n");
+                    embed.addField("Fälle", Math.round(Double.valueOf(String.valueOf(district.get("cases")))) + " (+" + Math.round(delta.get("cases")) + ")", true);
+                    embed.addField("Todesfälle", Math.round(Double.valueOf(String.valueOf(district.get("deaths")))) + " (+" + Math.round(delta.get("deaths")) + ")", true);
+                    embed.addField("Genesen", Math.round(Double.valueOf(String.valueOf(district.get("recovered")))) + " (+" + Math.round(delta.get("recovered")) + ")", true);
+                    embed.addField("Fälle pro Woche", "" + Math.round(Double.valueOf(String.valueOf(district.get("casesPerWeek")))), true);
+                    embed.addField("Todesfälle pro Woche", "" + Math.round(Double.valueOf(String.valueOf(district.get("deathsPerWeek")))), true);
+                    embed.addField("7-Tages-Inzidenz", "" + Math.round(Double.valueOf(String.valueOf(district.get("weekIncidence")))), true);
+                    embed.addField("Fälle pro 100k Einwohner", "" + Math.round(Double.valueOf(String.valueOf(district.get("casesPer100k")))), true);
+                    this.discord.getBackendManager().sendMessage(event, embed.build());
+                } catch (IOException ex) {
+                    EmbedBuilder embed = new EmbedBuilder();
+                    embed.setColor(new Color(235, 52, 94));
+                    embed.setDescription("Leider konnte deine Anfrage nicht bearbeitet werden. Sollte es an uns liegen, so schreibe uns bitte eine E-Mail (support@germanycovid.de).");
+                    this.discord.getBackendManager().sendMessage(event, embed.build());
+                    this.discord.consoleError("The districts data for " + args[1].toLowerCase() + " could not be loaded.");
+                }
                 break;
         }
     }
