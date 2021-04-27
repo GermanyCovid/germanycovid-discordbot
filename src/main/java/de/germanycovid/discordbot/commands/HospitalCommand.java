@@ -18,11 +18,11 @@ import net.dv8tion.jda.api.utils.AttachmentOption;
  * All rights reserved. https://github.com/VocalZero
  *
  */
-public class StatsCommand {
+public class HospitalCommand {
     
     private final DiscordBot discord;
 
-    public StatsCommand(DiscordBot discord) {
+    public HospitalCommand(DiscordBot discord) {
         this.discord = discord;
     }
     
@@ -32,10 +32,10 @@ public class StatsCommand {
         
         InputStream inputStream;
         try {
-            URLConnection url = new URL("https://api.germanycovid.de/images/germany").openConnection();
+            URLConnection url = new URL("https://api.germanycovid.de/images/intensivregister").openConnection();
             url.addRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36");
             inputStream = url.getInputStream();
-            event.getChannel().sendMessage("Die allgemeinen Statistiken werden unsererseits täglich um 12:00 Uhr (MESZ) aktualisiert.").addFile(inputStream, "stats.png", new AttachmentOption[0]).queue();
+            event.getChannel().sendMessage("Die Statistiken für die Intensivstationen werden unsererseits täglich um 13:00 Uhr (MESZ) aktualisiert.").addFile(inputStream, "hospital.png", new AttachmentOption[0]).queue();
         } catch (IOException ex) {
             EmbedBuilder embed = new EmbedBuilder();
             embed.setColor(new Color(235, 52, 94));

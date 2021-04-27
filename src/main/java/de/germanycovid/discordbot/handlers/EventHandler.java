@@ -5,6 +5,7 @@ import de.germanycovid.discordbot.commands.InfoCommand;
 import de.germanycovid.discordbot.commands.StatesCommand;
 import de.germanycovid.discordbot.commands.StatsCommand;
 import de.germanycovid.discordbot.commands.DistrictsCommand;
+import de.germanycovid.discordbot.commands.HospitalCommand;
 import java.text.MessageFormat;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.events.ReadyEvent;
@@ -25,6 +26,7 @@ public class EventHandler extends ListenerAdapter {
     private StatsCommand statsCommand;
     private StatesCommand statesCommand;
     private DistrictsCommand districtsCommand;
+    private HospitalCommand hospitalCommand;
     
     public EventHandler(DiscordBot discordBot) {
         this.discordBot = discordBot;
@@ -32,6 +34,7 @@ public class EventHandler extends ListenerAdapter {
         this.statsCommand = new StatsCommand(discordBot);
         this.statesCommand = new StatesCommand(discordBot);
         this.districtsCommand = new DistrictsCommand(discordBot);
+        this.hospitalCommand = new HospitalCommand(discordBot);
     }
 
     @Override
@@ -61,6 +64,8 @@ public class EventHandler extends ListenerAdapter {
             statesCommand.execute(event);
         } else if (message.getContentRaw().toLowerCase().startsWith(prefix + "districts")) {
             districtsCommand.execute(event);
+        } else if (message.getContentRaw().toLowerCase().startsWith(prefix + "hospital")) {
+            hospitalCommand.execute(event);
         } else {
             return;
         }

@@ -45,7 +45,7 @@ public class DistrictsCommand {
                     URLConnection url = new URL("https://api.germanycovid.de/images/districts").openConnection();
                     url.addRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36");
                     inputStream = url.getInputStream();
-                    event.getChannel().sendFile(inputStream, "districts.png", new AttachmentOption[0]).queue();
+                    event.getChannel().sendMessage("Diese Karte für die Landkreise wird unsererseits täglich um 11:00 Uhr (MESZ) aktualisiert.").addFile(inputStream, "districts.png", new AttachmentOption[0]).queue();
                 } catch (IOException ex) {
                     EmbedBuilder embed = new EmbedBuilder();
                     embed.setColor(new Color(235, 52, 94));
