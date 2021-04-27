@@ -1,6 +1,7 @@
 package de.germanycovid.discordbot.handlers;
 
 import de.germanycovid.discordbot.DiscordBot;
+import de.germanycovid.discordbot.commands.ChannelCommand;
 import de.germanycovid.discordbot.commands.InfoCommand;
 import de.germanycovid.discordbot.commands.StatesCommand;
 import de.germanycovid.discordbot.commands.StatsCommand;
@@ -29,6 +30,7 @@ public class EventHandler extends ListenerAdapter {
     private DistrictsCommand districtsCommand;
     private HospitalCommand hospitalCommand;
     private PrefixCommand prefixCommand;
+    private ChannelCommand channelCommand;
     
     public EventHandler(DiscordBot discordBot) {
         this.discordBot = discordBot;
@@ -38,6 +40,7 @@ public class EventHandler extends ListenerAdapter {
         this.districtsCommand = new DistrictsCommand(discordBot);
         this.hospitalCommand = new HospitalCommand(discordBot);
         this.prefixCommand = new PrefixCommand(discordBot);
+        this.channelCommand = new ChannelCommand(discordBot);
     }
 
     @Override
@@ -71,6 +74,8 @@ public class EventHandler extends ListenerAdapter {
             hospitalCommand.execute(event);
         } else if (message.getContentRaw().toLowerCase().startsWith(prefix + "prefix")) {
             prefixCommand.execute(event);
+        } else if (message.getContentRaw().toLowerCase().startsWith(prefix + "channel")) {
+            channelCommand.execute(event);
         } else {
             return;
         }
