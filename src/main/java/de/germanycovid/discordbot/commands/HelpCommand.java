@@ -28,7 +28,7 @@ public class HelpCommand {
         EmbedBuilder embed = new EmbedBuilder();
         embed.setColor(new Color(22, 115, 232));
         embed.setAuthor("» Hilfe", null, event.getJDA().getSelfUser().getAvatarUrl());
-        embed.setDescription("Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et\n\n** **");
+        embed.setDescription("GermanyCovid – Wir bieten dir täglich mehrere Daten kurzgefasst auf einen Blick an, um Dich mit den neusten Daten vertraut zu machen. Neben den Neuinfektionen und den Todesfällen bieten wir auch die Zahlen zu den Intensivstationen, sowie zu den jeweiligen Bundesländern und Landkreisen an.\n\n** **");
         embed.addField("Befehle", "**" + this.discord.getBackendManager().getPrefix(event.getGuild()) + "info** - Hier findest Du Fakten und Informationen zum Bot.\n"
                 + "**" + this.discord.getBackendManager().getPrefix(event.getGuild()) + "stats** - Siehe die wichtigsten Daten für die Bundesrepublik.\n"
                 + "**" + this.discord.getBackendManager().getPrefix(event.getGuild()) + "states** - Finde die Daten für die Bundesländer\n"

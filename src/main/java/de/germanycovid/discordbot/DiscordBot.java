@@ -27,6 +27,7 @@ public class DiscordBot {
     
     private ShardManager shardManager;
     private Gson gson;
+    private long startTimeMillis;
     
     private LoggerManager loggerManager;
     private MongoManager mongoManager;
@@ -39,6 +40,7 @@ public class DiscordBot {
     
     private void init() {
         this.gson = new Gson();
+        this.startTimeMillis = System.currentTimeMillis();
         
         this.loggerManager = new LoggerManager();
         this.mongoManager = new MongoManager(this);
@@ -65,6 +67,10 @@ public class DiscordBot {
 
     public Gson getGson() {
         return gson;
+    }
+
+    public long getStartTimeMillis() {
+        return startTimeMillis;
     }
 
     public ShardManager getShardManager() {
