@@ -11,4 +11,4 @@ updates:
       prefix-development: "⚠️"
     labels:
       - "enhancement"
-    open-pull-requests-limit: 15
+    open-pull-requests-limit: 10
