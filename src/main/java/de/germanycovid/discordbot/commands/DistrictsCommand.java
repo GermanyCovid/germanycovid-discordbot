@@ -78,13 +78,9 @@ public class DistrictsCommand {
                     embed.setColor(new Color(22, 115, 232));
                     embed.setTitle("Statistiken für " + ((String) district.get("name")) + " (" + ((String) district.get("state")) + ")");
                     embed.setDescription("** **\n\n");
-                    embed.addField("Fälle", decimalFormat.format(Math.round(Double.valueOf(String.valueOf(district.get("cases"))))) + " (+" + decimalFormat.format(Math.round(delta.get("cases"))) + ")", true);
-                    embed.addField("Todesfälle", decimalFormat.format(Math.round(Double.valueOf(String.valueOf(district.get("deaths"))))) + " +(" + decimalFormat.format(Math.round(delta.get("deaths"))) + ")", true);
-                    embed.addField("Genesen", decimalFormat.format(Math.round(Double.valueOf(String.valueOf(district.get("recovered"))))) + " (+" + decimalFormat.format(Math.round(delta.get("recovered"))) + ")", true);
-                    embed.addField("Fälle pro Woche", "" + decimalFormat.format(Math.round(Double.valueOf(String.valueOf(district.get("casesPerWeek"))))), true);
-                    embed.addField("Todesfälle pro Woche", "" + decimalFormat.format(Math.round(Double.valueOf(String.valueOf(district.get("deathsPerWeek"))))), true);
-                    embed.addField("7-Tages-Inzidenz", "" + decimalFormat.format(Math.round(Double.valueOf(String.valueOf(district.get("weekIncidence"))))), true);
-                    embed.addField("Fälle pro 100k Einwohner", "" + decimalFormat.format(Math.round(Double.valueOf(String.valueOf(district.get("casesPer100k"))))), true);
+                    embed.addField("Allgemeine Statistiken", "**Fälle**\n" + decimalFormat.format(Math.round(Double.valueOf(String.valueOf(district.get("cases"))))) + " (+" + decimalFormat.format(Math.round(delta.get("cases"))) + ")" + "\n**7-Tages-Inzidenz**\n" + decimalFormat.format(Math.round(Double.valueOf(String.valueOf(district.get("weekIncidence"))))) + "\n** **", true);
+                    embed.addField("** **", "**Todesfälle**\n" + decimalFormat.format(Math.round(Double.valueOf(String.valueOf(district.get("deaths"))))) + " (+" + decimalFormat.format(Math.round(delta.get("deaths"))) + ")" + "\n**Fälle pro Woche**\n" + decimalFormat.format(Math.round(Double.valueOf(String.valueOf(district.get("casesPerWeek"))))) + "\n** **", true);
+                    embed.addField("** **", "**Genesen**\n" + decimalFormat.format(Math.round(Double.valueOf(String.valueOf(district.get("recovered"))))) + " (+" + decimalFormat.format(Math.round(delta.get("recovered"))) + ")" + "\n**Fälle pro 100k Einwohner**\n" + decimalFormat.format(Math.round(Double.valueOf(String.valueOf(district.get("casesPer100k"))))) + "\n** **", true);
                     this.discord.getBackendManager().sendMessage(event, embed.build());
                 } catch (IOException ex) {
                     EmbedBuilder embed = new EmbedBuilder();
