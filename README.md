@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://www.germanycovid.de">
-    <img alt="atomicradio" src="https://i.imgur.com/tQEj7At.png" width="150" />
+    <img alt="germanycovid" src="https://i.imgur.com/tQEj7At.png" width="150" />
   </a>
 </p>
 <h1 align="center">
