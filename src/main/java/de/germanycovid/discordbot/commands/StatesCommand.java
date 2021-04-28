@@ -62,12 +62,15 @@ public class StatesCommand {
             default:
                 try {
                     LinkedTreeMap<String, Object> state = null;
+                    LinkedTreeMap<String, Object> vaccinations = null;
                     if(args[1].length() == 2) {
                         state = this.discord.getBackendManager().getStateByAbbreviation(args[1]);
+                        vaccinations = this.discord.getBackendManager().getVaccinationsByAbbreviation(args[1]);
                     } else {
                         state = this.discord.getBackendManager().getStateByName(message.getContentRaw().split(this.discord.getBackendManager().getPrefix(event.getGuild()) + "states ")[1]);
+                        vaccinations = this.discord.getBackendManager().getVaccinationsByName(message.getContentRaw().split(this.discord.getBackendManager().getPrefix(event.getGuild()) + "states ")[1]);
                     }
-                    if(state == null) {
+                    if(state == null || vaccinations == null) {
                         EmbedBuilder embed = new EmbedBuilder();
                         embed.setColor(new Color(235, 52, 94));
                         embed.setDescription("Dein Bundesland konnte leider nicht gefunden werden. Vergewissere dich, dass Du dieses richtig geschrieben hast. Sollte es an uns liegen, so schreibe uns bitte eine E-Mail (support@germanycovid.de).");
@@ -83,13 +86,12 @@ public class StatesCommand {
                     embed.setColor(new Color(22, 115, 232));
                     embed.setDescription("** **\n\n");
                     embed.setTitle("Statistiken für " + ((String) state.get("name")) + " (" + ((String) state.get("abbreviation")) + ")");
-                    embed.addField("Fälle", decimalFormat.format(Math.round(Double.valueOf(String.valueOf(state.get("cases"))))) + " (+" + decimalFormat.format(Math.round(delta.get("cases"))) + ")", true);
-                    embed.addField("Todesfälle", decimalFormat.format(Math.round(Double.valueOf(String.valueOf(state.get("deaths"))))) + " (+" + decimalFormat.format(Math.round(delta.get("deaths"))) + ")", true);
-                    embed.addField("Genesen", decimalFormat.format(Math.round(Double.valueOf(String.valueOf(state.get("recovered"))))) + " (+" + decimalFormat.format(Math.round(delta.get("recovered"))) + ")", true);
-                    embed.addField("Fälle pro Woche", "" + decimalFormat.format(Math.round(Double.valueOf(String.valueOf(state.get("casesPerWeek"))))), true);
-                    embed.addField("Todesfälle pro Woche", "" + decimalFormat.format(Math.round(Double.valueOf(String.valueOf(state.get("deathsPerWeek"))))), true);
-                    embed.addField("7-Tages-Inzidenz", "" + decimalFormat.format(Math.round(Double.valueOf(String.valueOf(state.get("weekIncidence"))))), true);
-                    embed.addField("Fälle pro 100k Einwohner", "" + decimalFormat.format(Math.round(Double.valueOf(String.valueOf(state.get("casesPer100k"))))), true);
+                    embed.addField("Allgemeine Statistiken", "**Fälle**\n" + decimalFormat.format(Math.round(Double.valueOf(String.valueOf(state.get("cases"))))) + " (+" + decimalFormat.format(Math.round(delta.get("cases"))) + ")" + "\n**7-Tages-Inzidenz**\n" + decimalFormat.format(Math.round(Double.valueOf(String.valueOf(state.get("weekIncidence"))))) + "\n** **", true);
+                    embed.addField("** **", "**Todesfälle**\n" + decimalFormat.format(Math.round(Double.valueOf(String.valueOf(state.get("deaths"))))) + " (+" + decimalFormat.format(Math.round(delta.get("deaths"))) + ")" + "\n**Fälle pro Woche**\n" + decimalFormat.format(Math.round(Double.valueOf(String.valueOf(state.get("casesPerWeek"))))) + "\n** **", true);
+                    embed.addField("** **", "**Genesen**\n" + decimalFormat.format(Math.round(Double.valueOf(String.valueOf(state.get("recovered"))))) + " (+" + decimalFormat.format(Math.round(delta.get("recovered"))) + ")" + "\n**Fälle pro 100k Einwohner**\n" + decimalFormat.format(Math.round(Double.valueOf(String.valueOf(state.get("casesPer100k"))))) + "\n** **", true);
+                    LinkedTreeMap<String, Object> secondVaccination = (LinkedTreeMap<String, Object>) vaccinations.get("secondVaccination");
+                    embed.addField("Statistiken Impfungen", "**Erstimpfungen**\n" + decimalFormat.format(Math.round(Double.valueOf(String.valueOf(vaccinations.get("vaccinated"))))) + " (+" + decimalFormat.format(Math.round((Double)vaccinations.get("delta"))) + ")" + "\n**Impfquote**\n" + new DecimalFormat("0.00").format((Double)vaccinations.get("quote")) + "%", true);
+                    embed.addField("** **", "**Zweitimpfungen**\n" + decimalFormat.format(Math.round(Double.valueOf(String.valueOf(secondVaccination.get("vaccinated"))))) + " (+" + decimalFormat.format(Math.round((Double)secondVaccination.get("delta"))) + ")" + "\n**Impfquote**\n" + new DecimalFormat("0.00").format((Double)secondVaccination.get("quote")) + "%", true);
                     this.discord.getBackendManager().sendMessage(event, embed.build());
                 } catch (IOException ex) {
                     EmbedBuilder embed = new EmbedBuilder();

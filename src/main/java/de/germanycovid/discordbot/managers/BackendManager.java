@@ -190,4 +190,30 @@ public class BackendManager {
         return district.getValue();
     }
     
+    public HashMap<String, LinkedTreeMap<String, Object>> getVaccinations() throws IOException {
+        URLConnection url = new URL("https://rki.germanycovid.de/vaccinations").openConnection();
+        url.addRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36");
+        url.connect();
+        JsonParser jsonParser = new JsonParser();
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader((InputStream) url.getContent(), "UTF-8"));
+        JsonElement jsonElement = jsonParser.parse(bufferedReader);
+        JsonObject jsonObject = jsonElement.getAsJsonObject();
+        HashMap<String, LinkedTreeMap<String, Object>> vaccinations = this.discord.getGson().fromJson(((JsonObject) jsonObject.get("data")).get("states"), HashMap.class);
+        return vaccinations;
+    }
+    
+    public LinkedTreeMap<String, Object> getVaccinationsByName(String name) throws IOException {
+        HashMap<String, LinkedTreeMap<String, Object>> vaccinations = this.getVaccinations();
+        Map.Entry<String, LinkedTreeMap<String, Object>> vaccination = vaccinations.entrySet().stream().filter(x -> ((String) x.getValue().get("name")).equalsIgnoreCase(name)).findFirst().orElse(null);
+        if(vaccination == null) return null;
+        return vaccination.getValue();
+    }
+    
+    public LinkedTreeMap<String, Object> getVaccinationsByAbbreviation(String abbreviation) throws IOException {
+        HashMap<String, LinkedTreeMap<String, Object>> vaccinations = this.getVaccinations();
+        Map.Entry<String, LinkedTreeMap<String, Object>> vaccination = vaccinations.entrySet().stream().filter(x -> x.getKey().equalsIgnoreCase(abbreviation)).findFirst().orElse(null);
+        if(vaccination == null) return null;
+        return vaccination.getValue();
+    }
+    
 }
