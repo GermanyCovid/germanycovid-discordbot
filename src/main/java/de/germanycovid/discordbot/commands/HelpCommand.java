@@ -35,8 +35,8 @@ public class HelpCommand {
                 + "**" + this.discord.getBackendManager().getPrefix(event.getGuild()) + "districts** - Finde die Daten für die 412 Landkreise bzw. Kreisfreien Städte\n"
                 + "**" + this.discord.getBackendManager().getPrefix(event.getGuild()) + "hospital** - Finde die wichtigsten Daten von den Intensivstationen.", false);
         if(this.discord.getBackendManager().checkForPermissions(event.getMember())) {
-            embed.addField("Admin Befehle", "**" + this.discord.getBackendManager().getPrefix(event.getGuild()) + "prefix [prefix]** - Änder den Prefix\n"
-                + "**" + this.discord.getBackendManager().getPrefix(event.getGuild()) + "channel [id]** - Gebe einen Channel an, wo nur noch Commands ausführbar sein sollen", false);
+            embed.addField("Admin Befehle", "**" + this.discord.getBackendManager().getPrefix(event.getGuild()) + "prefix <prefix>** - Änder den Prefix\n"
+                + "**" + this.discord.getBackendManager().getPrefix(event.getGuild()) + "channel <#channel>** - Gebe einen Channel an, wo nur noch Commands ausführbar sein sollen", false);
         }
         this.discord.getBackendManager().sendMessage(event, embed.build());
     }

@@ -23,8 +23,16 @@ public class ChannelCommand {
     }
     
     public void execute(GuildMessageReceivedEvent event) {
-        Message message = event.getMessage();
+        Message message = event.getMessage(); 
         String[] args = message.getContentRaw().split(" ");
+        
+        if (!this.discord.getBackendManager().checkForPermissions(event.getMember())) {
+            EmbedBuilder embed = new EmbedBuilder();
+            embed.setColor(new Color(235, 52, 94));
+            embed.setDescription("Du darfst diesen Befehl nicht ausführen. Diesen Befehl können ausschließlich Personen mit den Rechten ``ADMINISTRATOR`` ausführen. Frage hierfür bei dem Besitzer des Servers nach, ob dieser dir helfen kann.");
+            this.discord.getBackendManager().sendMessage(event, embed.build());
+            return;
+        } 
         
         if (args.length == 1) {
             EmbedBuilder embed = new EmbedBuilder();
