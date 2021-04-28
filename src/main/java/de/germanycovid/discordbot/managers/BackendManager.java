@@ -132,7 +132,7 @@ public class BackendManager {
                 try {
                     event.getAuthor().openPrivateChannel().queue((channel) -> {
                         EmbedBuilder embed = new EmbedBuilder();
-                        embed.setColor(new Color(22, 115, 232));
+                        embed.setColor(new Color(235, 52, 94));
                         embed.setDescription("I do not have permissions to **" + ex.getPermission().getName().toLowerCase() + "** in " + event.getChannel().getAsMention() + ", please contact an administrator.");
                         try {
                             channel.sendMessage(embed.build()).queue();
