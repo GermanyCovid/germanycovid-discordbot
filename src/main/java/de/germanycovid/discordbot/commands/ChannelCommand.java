@@ -71,7 +71,7 @@ public class ChannelCommand {
         this.discord.getBackendManager().setChannelId(event.getGuild(), textChannel.getId());
         EmbedBuilder embed = new EmbedBuilder();
         embed.setColor(new Color(22, 115, 232));
-        embed.setDescription("Dein Channel wurde erfolgreich übermittelt. Commands werden nun ausschließlich in " + textChannel.getAsMention() + " abgewickelt. Du möchtest diesen Channel aufheben? So verwende ``" + this.discord.getBackendManager().getPrefix(event.getGuild()) + "channel null``.");
+        embed.setDescription("Dein Channel wurde erfolgreich übermittelt. Commands werden nun ausschließlich in " + textChannel.getAsMention() + " abgewickelt. Personen mit den Rechten ``ADMINISTRATOR`` können Commands in jedem Channel ausführen.\n\n**Du möchtest diesen Channel aufheben?**\nSo verwende ``" + this.discord.getBackendManager().getPrefix(event.getGuild()) + "channel null``.");
         this.discord.getBackendManager().sendMessage(event, embed.build());
     }
     

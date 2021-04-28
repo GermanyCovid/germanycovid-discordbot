@@ -76,7 +76,7 @@ public class DistrictsCommand {
                     decimalFormat.setDecimalFormatSymbols(decimalFormatSymbols);
                     EmbedBuilder embed = new EmbedBuilder();
                     embed.setColor(new Color(22, 115, 232));
-                    embed.setTitle("Statistiken für " + ((String) district.get("name")) + " (" + ((String) district.get("ags")) + ")");
+                    embed.setTitle("Statistiken für " + ((String) district.get("name")) + " (" + ((String) district.get("state")) + ")");
                     embed.setDescription("** **\n\n");
                     embed.addField("Fälle", decimalFormat.format(Math.round(Double.valueOf(String.valueOf(district.get("cases"))))) + " (+" + decimalFormat.format(Math.round(delta.get("cases"))) + ")", true);
                     embed.addField("Todesfälle", decimalFormat.format(Math.round(Double.valueOf(String.valueOf(district.get("deaths"))))) + " +(" + decimalFormat.format(Math.round(delta.get("deaths"))) + ")", true);
