@@ -51,10 +51,10 @@ public class DiscordBot {
     private void init() {
         this.gson = new GsonBuilder().setPrettyPrinting().create();
         this.startTimeMillis = System.currentTimeMillis();
+        this.loggerManager = new LoggerManager();
         
         loadConfig();
         
-        this.loggerManager = new LoggerManager();
         this.mongoManager = new MongoManager(this);
         this.guildManager = new GuildManager(this);
         this.backendManager = new BackendManager(this);
@@ -69,8 +69,8 @@ public class DiscordBot {
         builder.setActivity(Activity.watching("germanycovid.de"));
         builder.addEventListeners(new EventHandler(this));
         try {
-            builder.setShardsTotal(2);
-            builder.setShards(0, 1);
+            builder.setShardsTotal(3);
+            builder.setShards(0, 2);
             this.shardManager = builder.build();
         } catch (LoginException ex) {
             Logger.getLogger(DiscordBot.class.getName()).log(Level.SEVERE, null, ex);
