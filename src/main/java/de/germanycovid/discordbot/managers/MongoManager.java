@@ -7,6 +7,8 @@ import com.mongodb.async.client.MongoClients;
 import com.mongodb.async.client.MongoCollection;
 import com.mongodb.async.client.MongoDatabase;
 import de.germanycovid.discordbot.DiscordBot;
+import de.germanycovid.discordbot.objects.BotConfig;
+import java.text.MessageFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.bson.Document;
@@ -28,8 +30,9 @@ public class MongoManager {
     public MongoManager(DiscordBot discord) {
         this.discord = discord;
         try {
-            this.client = MongoClients.create(new ConnectionString("mongodb://127.0.0.1"));
-            this.database = client.getDatabase("germanycovid-discordbot");
+            BotConfig botConfig = this.discord.getBotConfig();
+            this.client = MongoClients.create(new ConnectionString(MessageFormat.format("mongodb://{0}:{1}@{2}:{3}/?authSource={0}", botConfig.getMongoDB().getUser(), botConfig.getMongoDB().getPassword(), botConfig.getMongoDB().getHost(), botConfig.getMongoDB().getPort())));
+            this.database = client.getDatabase(botConfig.getMongoDB().getDatabase());
             this.guilds = this.database.getCollection("guilds");
             this.discord.consoleInfo("The connection to the MongoDB database has been established.");
         } catch(MongoException ex) {
