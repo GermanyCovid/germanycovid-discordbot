@@ -35,7 +35,7 @@ public class InfoCommand {
         embed.setAuthor("» Informationen", null, event.getJDA().getSelfUser().getAvatarUrl());
         embed.setDescription("GermanyCovid – Wir bieten dir täglich mehrere Daten kurzgefasst auf einen Blick an, um Dich mit den neusten Daten vertraut zu machen. Neben den Neuinfektionen und den Todesfällen bieten wir auch die Zahlen zu den Intensivstationen, sowie zu den jeweiligen Bundesländern und Landkreisen an.\n\n** **");
         embed.addField("Datenquelle", "Um verlässliche Daten anzubieten greifen wir ausschließlich auf geprüfte Institute zurück. Hierbei handelt es sich einmal um das Robert Koch-Institut und um die Deutsche Interdisziplinäre Vereinigung für Intensiv- und Notfallmedizin (DIVI) e.V. Bei DIVI greifen wir auf die Daten für die Intensivstationen zu, beim RKI greifen wir auf die Daten, wie Neuinfektionen und Todesfälle zu.\n\n** **", false);
-        embed.addField("Verlinkungen", "[» Twitter](https://twitter.com/GermanyCovid)\n[» GitHub](https://github.com/GermanyCovid)\n[» Website](https://rentry.co/germanycorona)\n[» Bot einladen](https://germanycovid.com/discord)", true);
+        embed.addField("Verlinkungen", "[» Twitter](https://twitter.com/GermanyCovid)\n[» GitHub](https://github.com/GermanyCovid)\n[» Website](https://rentry.co/germanycorona)\n[» Bot einladen](https://germanycovid.de/discord)", true);
         embed.addField("Statistiken", "» " + this.discord.getBackendManager().getGuildCount() + " Server, " + this.discord.getBackendManager().getUserCount()+ " Nutzer\n» Ping: " + this.getPing() + "ms\n» Uptime: " + this.getOnlineTime(), true);
         this.discord.getBackendManager().sendMessage(event, embed.build());
     }

@@ -50,6 +50,12 @@ public class EventHandler extends ListenerAdapter {
         Message message = event.getMessage();
         String prefix = this.discordBot.getBackendManager().getPrefix(event.getGuild());
         
+        if(!this.discordBot.getBackendManager().checkForPermissions(event.getMember())) {
+            if(!event.getChannel().getId().equals(this.discordBot.getBackendManager().getChannelId(event.getGuild()))) {
+                return;
+            }
+        }
+        
         if (message.getMentionedUsers().stream().filter(t -> t.getId().equals(event.getGuild().getSelfMember().getId())).findFirst().orElse(null) != null) {
             helpCommand.execute(event);
             return;

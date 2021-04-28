@@ -51,7 +51,7 @@ public class PrefixCommand {
         
         this.discord.getBackendManager().setPrefix(event.getGuild(), args[1].toLowerCase());
         EmbedBuilder embed = new EmbedBuilder();
-        embed.setColor(new Color(235, 52, 94));
+        embed.setColor(new Color(22, 115, 232));
         embed.setDescription("Dein Prefix wurde erfolgreich zu **" + args[1].toLowerCase() + "** geändert.");
         this.discord.getBackendManager().sendMessage(event, embed.build());
     }
