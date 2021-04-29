@@ -51,8 +51,10 @@ public class EventHandler extends ListenerAdapter {
         String prefix = this.discordBot.getBackendManager().getPrefix(event.getGuild());
         
         if(!this.discordBot.getBackendManager().checkForPermissions(event.getMember())) {
-            if(!event.getChannel().getId().equals(this.discordBot.getBackendManager().getChannelId(event.getGuild()))) {
-                return;
+            if(!this.discordBot.getBackendManager().getChannelId(event.getGuild()).isEmpty()) {
+                if(!event.getChannel().getId().equals(this.discordBot.getBackendManager().getChannelId(event.getGuild()))) {
+                    return;
+                }
             }
         }
         

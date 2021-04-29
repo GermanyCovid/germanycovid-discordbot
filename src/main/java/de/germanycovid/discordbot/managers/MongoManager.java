@@ -31,8 +31,15 @@ public class MongoManager {
         this.discord = discord;
         try {
             BotConfig botConfig = this.discord.getBotConfig();
-            this.client = MongoClients.create(new ConnectionString(MessageFormat.format("mongodb://{0}:{1}@{2}:{3}/?authSource={0}", botConfig.getMongoDB().getUser(), botConfig.getMongoDB().getPassword(), botConfig.getMongoDB().getHost(), botConfig.getMongoDB().getPort())));
-            this.database = client.getDatabase(botConfig.getMongoDB().getDatabase());
+            if(botConfig.getMongoDB() == null) {
+                this.client = MongoClients.create(new ConnectionString("mongodb://127.0.0.1"));
+            }
+            if(botConfig.getMongoDB().getUser().isEmpty() || botConfig.getMongoDB().getPassword().isEmpty()) {
+                this.client = MongoClients.create(new ConnectionString("mongodb://127.0.0.1"));
+            } else {
+                this.client = MongoClients.create(new ConnectionString(MessageFormat.format("mongodb://{0}:{1}@{2}:{3}/?authSource={0}", botConfig.getMongoDB().getUser(), botConfig.getMongoDB().getPassword(), botConfig.getMongoDB().getHost(), botConfig.getMongoDB().getPort())));
+            }
+            this.database = client.getDatabase("discordbot");
             this.guilds = this.database.getCollection("guilds");
             this.discord.consoleInfo("The connection to the MongoDB database has been established.");
         } catch(MongoException ex) {
