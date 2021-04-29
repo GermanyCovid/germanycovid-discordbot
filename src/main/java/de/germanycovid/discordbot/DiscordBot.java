@@ -6,6 +6,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.security.auth.login.LoginException;
 import de.germanycovid.discordbot.handlers.EventHandler;
+import de.germanycovid.discordbot.handlers.ServerListHandler;
 import de.germanycovid.discordbot.managers.BackendManager;
 import de.germanycovid.discordbot.managers.GuildManager;
 import de.germanycovid.discordbot.managers.LoggerManager;
@@ -43,6 +44,7 @@ public class DiscordBot {
     private MongoManager mongoManager;
     private GuildManager guildManager;
     private BackendManager backendManager;
+    private ServerListHandler serverListHandler;
     
     public static void main(String[] args) {
         new DiscordBot().init();
@@ -75,6 +77,8 @@ public class DiscordBot {
         } catch (LoginException ex) {
             Logger.getLogger(DiscordBot.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        this.serverListHandler = new ServerListHandler(this);
     }
     
     private void loadConfig() {
@@ -83,6 +87,7 @@ public class DiscordBot {
             JSONObject jsonObject = (JSONObject) jsonParser.parse(new FileReader("config.json"));
             BotConfig config = new BotConfig();
             config.setToken((String) jsonObject.get("token"));
+            
             BotConfig.MongoDB mongoDB = new BotConfig.MongoDB();
             mongoDB.setHost((String) ((JSONObject) jsonObject.get("mongodb")).get("host"));
             mongoDB.setPort((String) ((JSONObject) jsonObject.get("mongodb")).get("port"));
@@ -90,10 +95,18 @@ public class DiscordBot {
             mongoDB.setPassword((String) ((JSONObject) jsonObject.get("mongodb")).get("password"));
             mongoDB.setDatabase((String) ((JSONObject) jsonObject.get("mongodb")).get("database"));
             config.setMongoDB(mongoDB);
+            
+            BotConfig.ServerLists serverLists = new BotConfig.ServerLists();
+            serverLists.setTopGGToken((String) ((JSONObject) jsonObject.get("serverLists")).get("topggToken"));
+            serverLists.setDiscordBoats((String) ((JSONObject) jsonObject.get("serverLists")).get("discordBoats"));
+            serverLists.setDblToken((String) ((JSONObject) jsonObject.get("serverLists")).get("dblToken"));
+            config.setServerLists(serverLists);
+            
             botConfig = config;
         } catch (FileNotFoundException ex) {
             BotConfig config = new BotConfig();
             config.setToken("");
+            
             BotConfig.MongoDB mongoDB = new BotConfig.MongoDB();
             mongoDB.setHost("127.0.0.1");
             mongoDB.setPort("27017");
@@ -101,6 +114,12 @@ public class DiscordBot {
             mongoDB.setPassword("");
             mongoDB.setDatabase("discordbot");
             config.setMongoDB(mongoDB);
+            
+            BotConfig.ServerLists serverLists = new BotConfig.ServerLists();
+            serverLists.setTopGGToken("");
+            serverLists.setDiscordBoats("");
+            serverLists.setDblToken("");
+            config.setServerLists(serverLists);
             
             FileWriter fileWriter = null;
             try {
