@@ -10,6 +10,9 @@ import java.net.URLConnection;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.Locale;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Message;
@@ -84,8 +87,13 @@ public class StatesCommand {
                     decimalFormat.setDecimalFormatSymbols(decimalFormatSymbols);
                     EmbedBuilder embed = new EmbedBuilder();
                     embed.setColor(new Color(22, 115, 232));
-                    embed.setDescription("** **\n\n");
+                    DayOfWeek dayOfWeek = DayOfWeek.from(LocalDate.now());
                     embed.setTitle("Statistiken für " + ((String) state.get("name")) + " (" + ((String) state.get("abbreviation")) + ")");
+                    if(dayOfWeek.getValue() == 7) {
+                        embed.setDescription("An Sonntagen werden keine neuen Impfdaten übermittelt.");
+                    } else {
+                        embed.setDescription("** **\n\n");
+                    }
                     embed.addField("Allgemeine Statistiken", "**Fälle**\n" + decimalFormat.format(Math.round(Double.valueOf(String.valueOf(state.get("cases"))))) + " (+" + decimalFormat.format(Math.round(delta.get("cases"))) + ")" + "\n**7-Tages-Inzidenz**\n" + decimalFormat.format(Math.round(Double.valueOf(String.valueOf(state.get("weekIncidence"))))) + "\n** **", true);
                     embed.addField("** **", "**Todesfälle**\n" + decimalFormat.format(Math.round(Double.valueOf(String.valueOf(state.get("deaths"))))) + " (+" + decimalFormat.format(Math.round(delta.get("deaths"))) + ")" + "\n**Fälle pro Woche**\n" + decimalFormat.format(Math.round(Double.valueOf(String.valueOf(state.get("casesPerWeek"))))) + "\n** **", true);
                     embed.addField("** **", "**Genesen**\n" + decimalFormat.format(Math.round(Double.valueOf(String.valueOf(state.get("recovered"))))) + " (+" + decimalFormat.format(Math.round(delta.get("recovered"))) + ")" + "\n**Fälle pro 100k Einwohner**\n" + decimalFormat.format(Math.round(Double.valueOf(String.valueOf(state.get("casesPer100k"))))) + "\n** **", true);
