@@ -12,7 +12,6 @@ import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.Locale;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Message;
