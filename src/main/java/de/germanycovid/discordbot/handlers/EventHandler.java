@@ -9,6 +9,7 @@ import de.germanycovid.discordbot.commands.DistrictsCommand;
 import de.germanycovid.discordbot.commands.HelpCommand;
 import de.germanycovid.discordbot.commands.HospitalCommand;
 import de.germanycovid.discordbot.commands.PrefixCommand;
+import de.germanycovid.discordbot.commands.SupportCommand;
 import java.text.MessageFormat;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
@@ -32,6 +33,7 @@ public class EventHandler extends ListenerAdapter {
     private PrefixCommand prefixCommand;
     private ChannelCommand channelCommand;
     private HelpCommand helpCommand;
+    private SupportCommand supportCommand;
     
     public EventHandler(DiscordBot discordBot) {
         this.discordBot = discordBot;
@@ -43,6 +45,7 @@ public class EventHandler extends ListenerAdapter {
         this.prefixCommand = new PrefixCommand(discordBot);
         this.channelCommand = new ChannelCommand(discordBot);
         this.helpCommand = new HelpCommand(discordBot);
+        this.supportCommand = new SupportCommand(discordBot);
     }
 
     @Override
@@ -83,6 +86,9 @@ public class EventHandler extends ListenerAdapter {
             channelCommand.execute(event);
         } else if (message.getContentRaw().toLowerCase().startsWith(prefix + "help")) {
             helpCommand.execute(event);
+        } else if (message.getContentRaw().toLowerCase().startsWith(prefix + "support") || message.getContentRaw().toLowerCase().startsWith(prefix + "discord")
+                || message.getContentRaw().toLowerCase().startsWith(prefix + "twitter") || message.getContentRaw().toLowerCase().startsWith(prefix + "github")) {
+            supportCommand.execute(event);
         } else {
             return;
         }

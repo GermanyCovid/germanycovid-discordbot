@@ -54,7 +54,7 @@ public class DistrictsCommand {
                 } catch (IOException ex) {
                     EmbedBuilder embed = new EmbedBuilder();
                     embed.setColor(new Color(235, 52, 94));
-                    embed.setDescription("Leider konnte deine Anfrage nicht bearbeitet werden. Sollte es an uns liegen, so schreibe uns bitte eine E-Mail (support@germanycovid.de).");
+                    embed.setDescription("Leider konnte deine Anfrage nicht bearbeitet werden. Sollte es an uns liegen, so kannst du per [GitHub](https://github.com/GermanyCovid/germanycovid-discordbot/issues) ein Issue stellen.");
                     this.discord.getBackendManager().sendMessage(event, embed.build());
                     this.discord.consoleError("The image for the statistics could not be loaded.");
                 }
@@ -65,7 +65,7 @@ public class DistrictsCommand {
                     if (district == null) {
                         EmbedBuilder embed = new EmbedBuilder();
                         embed.setColor(new Color(235, 52, 94));
-                        embed.setDescription("Dein Landkreis bzw. deine kreisfreie Stadt konnte leider nicht gefunden werden. Vergewissere dich, dass du deinen Landkreis oder deine kreisfreie Stadt richtig geschrieben hast. Sollte es an uns liegen, so schreibe uns bitte eine E-Mail (support@germanycovid.de).");
+                        embed.setDescription("Dein Landkreis bzw. deine kreisfreie Stadt konnte leider nicht gefunden werden. Vergewissere dich, dass du deinen Landkreis oder deine kreisfreie Stadt richtig geschrieben hast. Sollte es an uns liegen, so kannst du per [GitHub](https://github.com/GermanyCovid/germanycovid-discordbot/issues) ein Issue stellen.");
                         this.discord.getBackendManager().sendMessage(event, embed.build());
                         return;
                     }
@@ -85,7 +85,7 @@ public class DistrictsCommand {
                 } catch (IOException ex) {
                     EmbedBuilder embed = new EmbedBuilder();
                     embed.setColor(new Color(235, 52, 94));
-                    embed.setDescription("Leider konnte deine Anfrage nicht bearbeitet werden. Sollte es an uns liegen, so schreibe uns bitte eine E-Mail (support@germanycovid.de).");
+                    embed.setDescription("Leider konnte deine Anfrage nicht bearbeitet werden. Sollte es an uns liegen, so kannst du per [GitHub](https://github.com/GermanyCovid/germanycovid-discordbot/issues) ein Issue stellen.");
                     this.discord.getBackendManager().sendMessage(event, embed.build());
                     this.discord.consoleError("The districts data for " + args[1].toLowerCase() + " could not be loaded.");
                 }

@@ -39,7 +39,7 @@ public class StatsCommand {
         } catch (IOException ex) {
             EmbedBuilder embed = new EmbedBuilder();
             embed.setColor(new Color(235, 52, 94));
-            embed.setDescription("Leider konnte deine Anfrage nicht bearbeitet werden. Sollte es an uns liegen, so schreibe uns bitte eine E-Mail (support@germanycovid.de).");
+            embed.setDescription("Leider konnte deine Anfrage nicht bearbeitet werden. Sollte es an uns liegen, so kannst du per [GitHub](https://github.com/GermanyCovid/germanycovid-discordbot/issues) ein Issue stellen.");
             this.discord.getBackendManager().sendMessage(event, embed.build());
             this.discord.consoleError("The image for the statistics could not be loaded.");
         }
