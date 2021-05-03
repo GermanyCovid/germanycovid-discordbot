@@ -16,6 +16,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
@@ -214,6 +215,29 @@ public class BackendManager {
         Map.Entry<String, LinkedTreeMap<String, Object>> vaccination = vaccinations.entrySet().stream().filter(x -> x.getKey().equalsIgnoreCase(abbreviation)).findFirst().orElse(null);
         if(vaccination == null) return null;
         return vaccination.getValue();
+    }
+    
+    public boolean isHoliday(Date date) {
+        if(date.getDay() == 0) return true;
+        if(date.getDate() == 1 && date.getMonth() == 0) {
+            return true;
+        } else if(date.getDate() == 18 && date.getMonth() == 3) {
+            return true;
+        } else if(date.getDate() == 1 && date.getMonth() == 4) {
+            return true;
+        } else if(date.getDate() == 13 && date.getMonth() == 4) {
+            return true;
+        } else if(date.getDate() == 24 && date.getMonth() == 4) {
+            return true;
+        } else if(date.getDate() == 3 && date.getMonth() == 9) {
+            return true;
+        } else if(date.getDate() == 31 && date.getMonth() == 9) {
+            return true;
+        } else if(date.getDate() == 1 && date.getMonth() == 10) {
+            return true;
+        } else if(date.getDate() == 25 && date.getMonth() == 11) {
+            return true;
+        } else return date.getDate() == 26 && date.getMonth() == 11;
     }
     
 }

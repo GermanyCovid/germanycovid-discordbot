@@ -10,8 +10,7 @@ import java.net.URLConnection;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
-import java.time.DayOfWeek;
-import java.time.LocalDate;
+import java.util.Date;
 import java.util.Locale;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Message;
@@ -86,10 +85,10 @@ public class StatesCommand {
                     decimalFormat.setDecimalFormatSymbols(decimalFormatSymbols);
                     EmbedBuilder embed = new EmbedBuilder();
                     embed.setColor(new Color(22, 115, 232));
-                    DayOfWeek dayOfWeek = DayOfWeek.from(LocalDate.now());
+                    Date date = new Date();
                     embed.setTitle("Statistiken für " + ((String) state.get("name")) + " (" + ((String) state.get("abbreviation")) + ")");
-                    if(dayOfWeek.getValue() == 7) {
-                        embed.setDescription("An Sonntagen werden keine neuen Impfdaten übermittelt.");
+                    if(this.discord.getBackendManager().isHoliday(date)) {
+                        embed.setDescription("An Sonn- und Feiertagen werden keine Impfdaten übermittelt.");
                     } else {
                         embed.setDescription("** **\n\n");
                     }
