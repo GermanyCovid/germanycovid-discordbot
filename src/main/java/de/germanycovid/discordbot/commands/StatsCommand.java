@@ -7,7 +7,6 @@ import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
 import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.utils.AttachmentOption;
 
@@ -27,9 +26,6 @@ public class StatsCommand {
     }
     
     public void execute(GuildMessageReceivedEvent event) {
-        Message message = event.getMessage();
-        String[] args = message.getContentRaw().split(" ");
-        
         InputStream inputStream;
         try {
             URLConnection url = new URL("https://api.germanycovid.de/images/germany").openConnection();

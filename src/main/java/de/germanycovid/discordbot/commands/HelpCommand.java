@@ -3,7 +3,6 @@ package de.germanycovid.discordbot.commands;
 import de.germanycovid.discordbot.DiscordBot;
 import java.awt.Color;
 import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
 /**
@@ -22,9 +21,6 @@ public class HelpCommand {
     }
     
     public void execute(GuildMessageReceivedEvent event) {
-        Message message = event.getMessage();
-        String[] args = message.getContentRaw().split(" ");
-        
         EmbedBuilder embed = new EmbedBuilder();
         embed.setColor(new Color(22, 115, 232));
         embed.setAuthor("» Hilfe", null, event.getJDA().getSelfUser().getAvatarUrl());

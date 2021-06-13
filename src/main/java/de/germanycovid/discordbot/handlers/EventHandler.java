@@ -25,15 +25,15 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter;
 public class EventHandler extends ListenerAdapter {
     
     private final DiscordBot discordBot;
-    private InfoCommand infoCommand;
-    private StatsCommand statsCommand;
-    private StatesCommand statesCommand;
-    private DistrictsCommand districtsCommand;
-    private HospitalCommand hospitalCommand;
-    private PrefixCommand prefixCommand;
-    private ChannelCommand channelCommand;
-    private HelpCommand helpCommand;
-    private SupportCommand supportCommand;
+    private final InfoCommand infoCommand;
+    private final StatsCommand statsCommand;
+    private final StatesCommand statesCommand;
+    private final DistrictsCommand districtsCommand;
+    private final HospitalCommand hospitalCommand;
+    private final PrefixCommand prefixCommand;
+    private final ChannelCommand channelCommand;
+    private final HelpCommand helpCommand;
+    private final SupportCommand supportCommand;
     
     public EventHandler(DiscordBot discordBot) {
         this.discordBot = discordBot;
@@ -66,9 +66,7 @@ public class EventHandler extends ListenerAdapter {
             return;
         }
         
-        if (!message.getContentRaw().toLowerCase().startsWith(prefix)) {
-            return;
-        }
+        if (!message.getContentRaw().toLowerCase().startsWith(prefix)) return;
         
         if (message.getContentRaw().toLowerCase().startsWith(prefix + "info")) {
             infoCommand.execute(event);

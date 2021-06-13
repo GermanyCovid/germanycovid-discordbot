@@ -8,7 +8,6 @@ import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
 /**
@@ -27,9 +26,6 @@ public class InfoCommand {
     }
     
     public void execute(GuildMessageReceivedEvent event) {
-        Message message = event.getMessage();
-        String[] args = message.getContentRaw().split(" ");
-        
         EmbedBuilder embed = new EmbedBuilder();
         embed.setColor(new Color(22, 115, 232));
         embed.setAuthor("» Informationen", null, event.getJDA().getSelfUser().getAvatarUrl());
@@ -48,7 +44,7 @@ public class InfoCommand {
             socket.close();
             return (System.nanoTime()-nanoTime) / 1000000;
         } catch (IOException ex) {
-            Logger.getLogger(InfoCommand.class.getName()).log(Level.ALL.SEVERE, null, ex);
+            Logger.getLogger(InfoCommand.class.getName()).log(Level.SEVERE, null, ex);
             return 0;
         }
     }

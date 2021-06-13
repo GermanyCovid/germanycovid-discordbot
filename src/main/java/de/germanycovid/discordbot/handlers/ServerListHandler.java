@@ -41,9 +41,7 @@ public class ServerListHandler {
     private void sendTopGGUpdate() {
         BotConfig botConfig = this.discord.getBotConfig();
         if(botConfig.getServerLists() == null || botConfig.getServerLists().getTopggToken() == null
-                || botConfig.getServerLists().getTopggToken().isEmpty()) {
-            return;
-        }
+                || botConfig.getServerLists().getTopggToken().isEmpty()) return;
         try {
             JsonObject jsonObject = new JsonObject();
             jsonObject.addProperty("server_count", this.discord.getBackendManager().getGuildCount());
@@ -70,9 +68,7 @@ public class ServerListHandler {
     private void sendDBLUpdate() {
         BotConfig botConfig = this.discord.getBotConfig();
         if(botConfig.getServerLists() == null || botConfig.getServerLists().getDblToken() == null
-                || botConfig.getServerLists().getDblToken().isEmpty()) {
-            return;
-        }
+                || botConfig.getServerLists().getDblToken().isEmpty()) return;
         try {
             JsonObject jsonObject = new JsonObject();
             jsonObject.addProperty("guilds", this.discord.getBackendManager().getGuildCount());

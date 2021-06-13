@@ -31,9 +31,7 @@ public class MongoManager {
         this.discord = discord;
         try {
             BotConfig botConfig = this.discord.getBotConfig();
-            if(botConfig.getMongoDB() == null) {
-                this.client = MongoClients.create(new ConnectionString("mongodb://127.0.0.1"));
-            }
+            if(botConfig.getMongoDB() == null) this.client = MongoClients.create(new ConnectionString("mongodb://127.0.0.1"));
             if(botConfig.getMongoDB().getUser().isEmpty() || botConfig.getMongoDB().getPassword().isEmpty()) {
                 this.client = MongoClients.create(new ConnectionString(MessageFormat.format("mongodb://{0}:{1}", botConfig.getMongoDB().getHost(), botConfig.getMongoDB().getPort())));
             } else {

@@ -62,7 +62,7 @@ public class StatesCommand {
                 break;
             default:
                 try {
-                    LinkedTreeMap<String, Object> state = null;
+                    LinkedTreeMap<String, Object> state;
                     LinkedTreeMap<String, Object> vaccinations = null;
                     boolean hideVaccinations = false;
                     if(args[1].length() == 2) {
@@ -104,7 +104,7 @@ public class StatesCommand {
                     embed.addField("Allgemeine Statistiken", "**Fälle**\n" + decimalFormat.format(Math.round(Double.valueOf(String.valueOf(state.get("cases"))))) + " (+" + decimalFormat.format(Math.round(delta.get("cases"))) + ")" + "\n**7-Tages-Inzidenz**\n" + decimalFormat.format(Math.round(Double.valueOf(String.valueOf(state.get("weekIncidence"))))) + "\n** **", true);
                     embed.addField("** **", "**Todesfälle**\n" + decimalFormat.format(Math.round(Double.valueOf(String.valueOf(state.get("deaths"))))) + " (+" + decimalFormat.format(Math.round(delta.get("deaths"))) + ")" + "\n**Fälle pro Woche**\n" + decimalFormat.format(Math.round(Double.valueOf(String.valueOf(state.get("casesPerWeek"))))) + "\n** **", true);
                     embed.addField("** **", "**Genesen**\n" + decimalFormat.format(Math.round(Double.valueOf(String.valueOf(state.get("recovered"))))) + " (+" + decimalFormat.format(Math.round(delta.get("recovered"))) + ")" + "\n**Fälle pro 100k Einwohner**\n" + decimalFormat.format(Math.round(Double.valueOf(String.valueOf(state.get("casesPer100k"))))) + "\n** **", true);
-                    if(!hideVaccinations) {
+                    if(!(hideVaccinations || vaccinations == null)) {
                         LinkedTreeMap<String, Object> secondVaccination = (LinkedTreeMap<String, Object>) vaccinations.get("secondVaccination");
                         embed.addField("Statistiken Impfungen", "**Erstimpfungen**\n" + decimalFormat.format(Math.round(Double.valueOf(String.valueOf(vaccinations.get("vaccinated"))))) + " (+" + decimalFormat.format(Math.round((Double)vaccinations.get("delta"))) + ")" + "\n**Impfquote**\n" + new DecimalFormat("0.00").format(((Double)vaccinations.get("quote"))*100) + "%", true);
                         embed.addField("** **", "**Zweitimpfungen**\n" + decimalFormat.format(Math.round(Double.valueOf(String.valueOf(secondVaccination.get("vaccinated"))))) + " (+" + decimalFormat.format(Math.round((Double)secondVaccination.get("delta"))) + ")" + "\n**Impfquote**\n" + new DecimalFormat("0.00").format(((Double)secondVaccination.get("quote"))*100) + "%", true);
