@@ -117,9 +117,7 @@ public class BackendManager {
     }
     
     public boolean checkForPermissions(Member member) {
-        if(member == null) {
-            return false;
-        }
+        if(member == null) return false;
         return PermissionUtil.checkPermission(member, Permission.ADMINISTRATOR) || member.getId().equals("223891083724193792") || member.getId().equals("359348375864344576");
     }
     
