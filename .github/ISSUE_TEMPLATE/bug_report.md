@@ -2,7 +2,7 @@
 name: Bug report
 about: You have found a bug? Then report it to us so we can improve.
 title: ''
-labels: bug
+labels: 'Type: Bug'
 assignees: VocalZero
 
 ---
