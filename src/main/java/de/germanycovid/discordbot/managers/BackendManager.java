@@ -216,7 +216,7 @@ public class BackendManager {
     }
     
     public boolean isHoliday(Date date) {
-        if(date.getDay() == 0) return true;
+        if(date.getDay() == 0 || date.getDay() == 6) return true;
         if(date.getDate() == 1 && date.getMonth() == 0) {
             return true;
         } else if(date.getDate() == 18 && date.getMonth() == 3) {

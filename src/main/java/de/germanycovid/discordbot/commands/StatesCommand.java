@@ -97,7 +97,7 @@ public class StatesCommand {
                     Date date = new Date();
                     embed.setTitle("Statistiken für " + ((String) state.get("name")) + " (" + ((String) state.get("abbreviation")) + ")");
                     if(this.discord.getBackendManager().isHoliday(date)) {
-                        embed.setDescription("An Sonn- und Feiertagen werden keine Impfdaten übermittelt.");
+                        embed.setDescription("An Sams-, Sonn- und Feiertagen werden keine Impfdaten übermittelt.");
                     } else {
                         embed.setDescription("** **\n\n");
                     }
