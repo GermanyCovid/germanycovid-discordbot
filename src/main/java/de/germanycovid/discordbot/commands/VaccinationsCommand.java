@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.Date;
+
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.utils.AttachmentOption;
@@ -26,6 +28,13 @@ public class VaccinationsCommand {
     }
     
     public void execute(GuildMessageReceivedEvent event) {
+        if(this.discord.getBackendManager().isHoliday(new Date())) {
+            EmbedBuilder embed = new EmbedBuilder();
+            embed.setColor(new Color(235, 52, 94));
+            embed.setDescription("An Sams-, Sonn- und Feiertagen werden keine Impfdaten übermittelt.");
+            this.discord.getBackendManager().sendMessage(event, embed.build());
+        }
+        
         InputStream inputStream;
         try {
             URLConnection url = new URL("https://api.germanycovid.de/images/vaccinations").openConnection();
