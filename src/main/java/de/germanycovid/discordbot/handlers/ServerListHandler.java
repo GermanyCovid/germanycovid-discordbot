@@ -39,7 +39,7 @@ public class ServerListHandler {
     }
     
     private void sendTopGGUpdate() {
-        BotConfig botConfig = this.discord.getBotConfig();
+        BotConfig botConfig = this.discord.getConfig();
         if(botConfig.getServerLists() == null || botConfig.getServerLists().getTopggToken() == null
                 || botConfig.getServerLists().getTopggToken().isEmpty()) return;
         try {
@@ -66,7 +66,7 @@ public class ServerListHandler {
     }
     
     private void sendDBLUpdate() {
-        BotConfig botConfig = this.discord.getBotConfig();
+        BotConfig botConfig = this.discord.getConfig();
         if(botConfig.getServerLists() == null || botConfig.getServerLists().getDblToken() == null
                 || botConfig.getServerLists().getDblToken().isEmpty()) return;
         try {
@@ -93,7 +93,7 @@ public class ServerListHandler {
     }
     
     private void sendDiscordBoatsUpdate() {
-        BotConfig botConfig = this.discord.getBotConfig();
+        BotConfig botConfig = this.discord.getConfig();
         if(botConfig.getServerLists() == null || botConfig.getServerLists().getDiscordBoats() == null
                 || botConfig.getServerLists().getDiscordBoats().isEmpty()) {
             return;

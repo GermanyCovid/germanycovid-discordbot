@@ -7,10 +7,7 @@ import java.util.logging.Logger;
 import javax.security.auth.login.LoginException;
 import de.germanycovid.discordbot.handlers.EventHandler;
 import de.germanycovid.discordbot.handlers.ServerListHandler;
-import de.germanycovid.discordbot.managers.BackendManager;
-import de.germanycovid.discordbot.managers.GuildManager;
-import de.germanycovid.discordbot.managers.LoggerManager;
-import de.germanycovid.discordbot.managers.MongoManager;
+import de.germanycovid.discordbot.managers.*;
 import de.germanycovid.discordbot.objects.BotConfig;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -41,9 +38,9 @@ public class DiscordBot {
     private ShardManager shardManager;
     private Gson gson;
     private long startTimeMillis;
-    private BotConfig botConfig;
-    
+
     private LoggerManager loggerManager;
+    private ConfigManager configManager;
     private MongoManager mongoManager;
     private GuildManager guildManager;
     private BackendManager backendManager;
@@ -57,14 +54,13 @@ public class DiscordBot {
         this.gson = new GsonBuilder().setPrettyPrinting().create();
         this.startTimeMillis = System.currentTimeMillis();
         this.loggerManager = new LoggerManager();
-        
-        loadConfig();
-        
+
+        this.configManager = new ConfigManager(this);
         this.mongoManager = new MongoManager(this);
         this.guildManager = new GuildManager(this);
         this.backendManager = new BackendManager(this);
         
-        DefaultShardManagerBuilder builder = DefaultShardManagerBuilder.createDefault(this.botConfig.getToken());
+        DefaultShardManagerBuilder builder = DefaultShardManagerBuilder.createDefault(this.getConfig().getToken());
         builder.setChunkingFilter(ChunkingFilter.NONE);
         builder.enableCache(CacheFlag.MEMBER_OVERRIDES);
         builder.disableCache(CacheFlag.ACTIVITY, CacheFlag.CLIENT_STATUS, CacheFlag.VOICE_STATE, CacheFlag.EMOTE);
@@ -83,70 +79,9 @@ public class DiscordBot {
         
         this.serverListHandler = new ServerListHandler(this);
     }
-    
-    private void loadConfig() {
-        JSONParser jsonParser = new JSONParser();
-        try {
-            JSONObject jsonObject = (JSONObject) jsonParser.parse(new FileReader("config.json"));
-            BotConfig config = new BotConfig();
-            config.setToken((String) jsonObject.get("token"));
-            
-            BotConfig.MongoDB mongoDB = new BotConfig.MongoDB();
-            mongoDB.setHost((String) ((JSONObject) jsonObject.get("mongodb")).get("host"));
-            mongoDB.setPort((String) ((JSONObject) jsonObject.get("mongodb")).get("port"));
-            mongoDB.setUser((String) ((JSONObject) jsonObject.get("mongodb")).get("user"));
-            mongoDB.setPassword((String) ((JSONObject) jsonObject.get("mongodb")).get("password"));
-            mongoDB.setDatabase((String) ((JSONObject) jsonObject.get("mongodb")).get("database"));
-            config.setMongodb(mongoDB);
-            
-            BotConfig.ServerLists serverLists = new BotConfig.ServerLists();
-            serverLists.setTopggToken((String) ((JSONObject) jsonObject.get("serverLists")).get("topggToken"));
-            serverLists.setDiscordBoats((String) ((JSONObject) jsonObject.get("serverLists")).get("discordBoats"));
-            serverLists.setDblToken((String) ((JSONObject) jsonObject.get("serverLists")).get("dblToken"));
-            config.setServerLists(serverLists);
-            
-            botConfig = config;
-        } catch (FileNotFoundException ex) {
-            BotConfig config = new BotConfig();
-            config.setToken("");
-            
-            BotConfig.MongoDB mongoDB = new BotConfig.MongoDB();
-            mongoDB.setHost("127.0.0.1");
-            mongoDB.setPort("27017");
-            mongoDB.setUser("");
-            mongoDB.setPassword("");
-            mongoDB.setDatabase("discordbot");
-            config.setMongodb(mongoDB);
-            
-            BotConfig.ServerLists serverLists = new BotConfig.ServerLists();
-            serverLists.setTopggToken("");
-            serverLists.setDiscordBoats("");
-            serverLists.setDblToken("");
-            config.setServerLists(serverLists);
-            
-            FileWriter fileWriter = null;
-            try {
-                fileWriter = new FileWriter("config.json");
-                fileWriter.write(this.gson.toJson(config));
-            } catch (IOException ex1) {
-                Logger.getLogger(DiscordBot.class.getName()).log(Level.SEVERE, null, ex1);
-                System.exit(0);
-            } finally {
-                try {
-                    fileWriter.flush();
-                    fileWriter.close();
-                    this.consoleInfo("Please configure your bot in the config.json.");
-                    System.exit(0);
-                } catch (IOException ex1) {
-                    Logger.getLogger(DiscordBot.class.getName()).log(Level.SEVERE, null, ex1);
-                    System.exit(0);
-                }
-            }
-            
-        } catch (IOException | ParseException ex) {
-            Logger.getLogger(DiscordBot.class.getName()).log(Level.SEVERE, null, ex);
-            System.exit(0);
-        }
+
+    public BotConfig getConfig() {
+        return this.configManager.getConfig();
     }
     
     public void consoleInfo(String text) {
