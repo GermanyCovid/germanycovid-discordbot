@@ -11,6 +11,8 @@ import de.germanycovid.discordbot.objects.BotConfig;
 import java.text.MessageFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import lombok.Getter;
 import org.bson.Document;
 
 /**
@@ -25,17 +27,18 @@ public class MongoManager {
     private final DiscordBot discord;
     private MongoClient client;
     private MongoDatabase database;
+    @Getter
     private MongoCollection<Document> guilds;
     
     public MongoManager(DiscordBot discord) {
         this.discord = discord;
         try {
             BotConfig botConfig = this.discord.getBotConfig();
-            if(botConfig.getMongoDB() == null) this.client = MongoClients.create(new ConnectionString("mongodb://127.0.0.1"));
-            if(botConfig.getMongoDB().getUser().isEmpty() || botConfig.getMongoDB().getPassword().isEmpty()) {
-                this.client = MongoClients.create(new ConnectionString(MessageFormat.format("mongodb://{0}:{1}", botConfig.getMongoDB().getHost(), botConfig.getMongoDB().getPort())));
+            if(botConfig.getMongodb() == null) this.client = MongoClients.create(new ConnectionString("mongodb://127.0.0.1"));
+            if(botConfig.getMongodb().getUser().isEmpty() || botConfig.getMongodb().getPassword().isEmpty()) {
+                this.client = MongoClients.create(new ConnectionString(MessageFormat.format("mongodb://{0}:{1}", botConfig.getMongodb().getHost(), botConfig.getMongodb().getPort())));
             } else {
-                this.client = MongoClients.create(new ConnectionString(MessageFormat.format("mongodb://{0}:{1}@{2}:{3}/?authSource={0}", botConfig.getMongoDB().getUser(), botConfig.getMongoDB().getPassword(), botConfig.getMongoDB().getHost(), botConfig.getMongoDB().getPort())));
+                this.client = MongoClients.create(new ConnectionString(MessageFormat.format("mongodb://{0}:{1}@{2}:{3}/?authSource={0}", botConfig.getMongodb().getUser(), botConfig.getMongodb().getPassword(), botConfig.getMongodb().getHost(), botConfig.getMongodb().getPort())));
             }
             this.database = client.getDatabase("discordbot");
             this.guilds = this.database.getCollection("guilds");
@@ -45,18 +48,6 @@ public class MongoManager {
             Logger.getLogger(MongoManager.class.getName()).log(Level.SEVERE, null, ex);
             Runtime.getRuntime().exit(0);
         }
-    }
-    
-    public MongoCollection<Document> getCollection(String name) {
-        return this.database.getCollection(name);
-    }
-
-    public MongoClient getClient() {
-        return client;
-    }
-
-    public MongoCollection<Document> getGuilds() {
-        return guilds;
     }
     
 }

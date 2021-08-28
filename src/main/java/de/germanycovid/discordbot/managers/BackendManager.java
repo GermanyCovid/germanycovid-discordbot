@@ -22,6 +22,8 @@ import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
+
+import lombok.Getter;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.Permission;
@@ -42,6 +44,7 @@ import net.dv8tion.jda.internal.utils.PermissionUtil;
 public class BackendManager {
     
     private final DiscordBot discord;
+    @Getter
     private LoadingCache<String, GuildData> guildCache;
     
     public BackendManager(DiscordBot discord) {
@@ -50,7 +53,7 @@ public class BackendManager {
     }
  
     private void initCache() {
-        this.guildCache = (LoadingCache<String, GuildData>) CacheBuilder.newBuilder().maximumSize(100L).expireAfterWrite(10L, TimeUnit.MINUTES).build((CacheLoader) new CacheLoader<String, GuildData>() {
+        this.guildCache = CacheBuilder.newBuilder().maximumSize(100L).expireAfterWrite(10L, TimeUnit.MINUTES).build(new CacheLoader<String, GuildData>() {
             @Override
             public GuildData load(String id) throws Exception {
                 CompletableFuture<GuildData> completableFuture = new CompletableFuture<>();
@@ -60,10 +63,6 @@ public class BackendManager {
                 return completableFuture.get();
             }
         });
-    }
-    
-    public LoadingCache<String, GuildData> getGuildCache() {
-        return guildCache;
     }
     
     public GuildData getGuild(Guild guild) {

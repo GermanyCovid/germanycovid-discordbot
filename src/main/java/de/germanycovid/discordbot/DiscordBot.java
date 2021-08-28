@@ -16,6 +16,8 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+
+import lombok.Getter;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.sharding.DefaultShardManagerBuilder;
 import net.dv8tion.jda.api.sharding.ShardManager;
@@ -33,6 +35,7 @@ import org.json.simple.parser.ParseException;
  * All rights reserved. https://github.com/VocalZero
  *
  */
+@Getter
 public class DiscordBot {
     
     private ShardManager shardManager;
@@ -94,10 +97,10 @@ public class DiscordBot {
             mongoDB.setUser((String) ((JSONObject) jsonObject.get("mongodb")).get("user"));
             mongoDB.setPassword((String) ((JSONObject) jsonObject.get("mongodb")).get("password"));
             mongoDB.setDatabase((String) ((JSONObject) jsonObject.get("mongodb")).get("database"));
-            config.setMongoDB(mongoDB);
+            config.setMongodb(mongoDB);
             
             BotConfig.ServerLists serverLists = new BotConfig.ServerLists();
-            serverLists.setTopGGToken((String) ((JSONObject) jsonObject.get("serverLists")).get("topggToken"));
+            serverLists.setTopggToken((String) ((JSONObject) jsonObject.get("serverLists")).get("topggToken"));
             serverLists.setDiscordBoats((String) ((JSONObject) jsonObject.get("serverLists")).get("discordBoats"));
             serverLists.setDblToken((String) ((JSONObject) jsonObject.get("serverLists")).get("dblToken"));
             config.setServerLists(serverLists);
@@ -113,10 +116,10 @@ public class DiscordBot {
             mongoDB.setUser("");
             mongoDB.setPassword("");
             mongoDB.setDatabase("discordbot");
-            config.setMongoDB(mongoDB);
+            config.setMongodb(mongoDB);
             
             BotConfig.ServerLists serverLists = new BotConfig.ServerLists();
-            serverLists.setTopGGToken("");
+            serverLists.setTopggToken("");
             serverLists.setDiscordBoats("");
             serverLists.setDblToken("");
             config.setServerLists(serverLists);
@@ -145,41 +148,9 @@ public class DiscordBot {
             System.exit(0);
         }
     }
-
-    public Gson getGson() {
-        return gson;
-    }
-
-    public long getStartTimeMillis() {
-        return startTimeMillis;
-    }
-
-    public BotConfig getBotConfig() {
-        return botConfig;
-    }
-
-    public ShardManager getShardManager() {
-        return shardManager;
-    }
-
-    public MongoManager getMongoManager() {
-        return mongoManager;
-    }
-
-    public GuildManager getGuildManager() {
-        return guildManager;
-    }
-
-    public BackendManager getBackendManager() {
-        return backendManager;
-    }
     
     public void consoleInfo(String text) {
         this.loggerManager.sendInfo(text);
-    }
-
-    public void consoleWarning(String text) {
-        this.loggerManager.sendWarning(text);
     }
 
     public void consoleError(String text) {
