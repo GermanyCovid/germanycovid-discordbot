@@ -1,16 +1,8 @@
 package de.germanycovid.discordbot.handlers;
 
 import de.germanycovid.discordbot.DiscordBot;
-import de.germanycovid.discordbot.commands.ChannelCommand;
-import de.germanycovid.discordbot.commands.InfoCommand;
-import de.germanycovid.discordbot.commands.StatesCommand;
-import de.germanycovid.discordbot.commands.StatsCommand;
-import de.germanycovid.discordbot.commands.DistrictsCommand;
-import de.germanycovid.discordbot.commands.HelpCommand;
-import de.germanycovid.discordbot.commands.HospitalCommand;
-import de.germanycovid.discordbot.commands.PrefixCommand;
-import de.germanycovid.discordbot.commands.SupportCommand;
-import de.germanycovid.discordbot.commands.VaccinationsCommand;
+import de.germanycovid.discordbot.commands.*;
+
 import java.text.MessageFormat;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
@@ -36,7 +28,7 @@ public class EventHandler extends ListenerAdapter {
     private final HelpCommand helpCommand;
     private final SupportCommand supportCommand;
     private final VaccinationsCommand vaccinationsCommand;
-    
+
     public EventHandler(DiscordBot discordBot) {
         this.discordBot = discordBot;
         this.infoCommand = new InfoCommand(discordBot);
@@ -71,9 +63,10 @@ public class EventHandler extends ListenerAdapter {
         
         if (!message.getContentRaw().toLowerCase().startsWith(prefix)) return;
         
-        if (message.getContentRaw().toLowerCase().startsWith(prefix + "info")) {
+        if (message.getContentRaw().toLowerCase().startsWith(prefix + "info") || message.getContentRaw().toLowerCase().startsWith(prefix + "about")
+                || message.getContentRaw().toLowerCase().startsWith(prefix + "invite")) {
             infoCommand.execute(event);
-        } else if (message.getContentRaw().toLowerCase().startsWith(prefix + "stats")) {
+        } else if (message.getContentRaw().toLowerCase().startsWith(prefix + "stats") || message.getContentRaw().toLowerCase().startsWith(prefix + "general")) {
             statsCommand.execute(event);
         } else if (message.getContentRaw().toLowerCase().startsWith(prefix + "states")) {
             statesCommand.execute(event);
@@ -92,7 +85,9 @@ public class EventHandler extends ListenerAdapter {
             supportCommand.execute(event);
         } else if (message.getContentRaw().toLowerCase().startsWith(prefix + "vaccinations")) {
             vaccinationsCommand.execute(event);
-        } else {
+        } /*else if (message.getContentRaw().toLowerCase().startsWith(prefix + "feed")) {
+            feedCommand.execute(event);
+        }*/ else {
             return;
         }
         
