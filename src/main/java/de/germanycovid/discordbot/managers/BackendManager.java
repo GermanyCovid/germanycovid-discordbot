@@ -144,7 +144,7 @@ public class BackendManager {
     }
     
     public HashMap<String, LinkedTreeMap<String, Object>> getStates() throws IOException {
-        URLConnection url = new URL("https://rki.germanycovid.de/states").openConnection();
+        URLConnection url = new URL("https://api.corona-zahlen.org/states").openConnection();
         url.addRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36");
         url.connect();
         JsonParser jsonParser = new JsonParser();
@@ -170,7 +170,7 @@ public class BackendManager {
     }
     
     public HashMap<String, LinkedTreeMap<String, Object>> getDistricts() throws IOException {
-        URLConnection url = new URL("https://rki.germanycovid.de/districts").openConnection();
+        URLConnection url = new URL("https://api.corona-zahlen.org/districts").openConnection();
         url.addRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36");
         url.connect();
         JsonParser jsonParser = new JsonParser();
@@ -189,7 +189,7 @@ public class BackendManager {
     }
     
     public HashMap<String, LinkedTreeMap<String, Object>> getVaccinations() throws IOException {
-        URLConnection url = new URL("https://rki.germanycovid.de/vaccinations").openConnection();
+        URLConnection url = new URL("https://api.corona-zahlen.org/vaccinations").openConnection();
         url.addRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36");
         url.connect();
         JsonParser jsonParser = new JsonParser();
