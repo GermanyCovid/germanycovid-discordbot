@@ -9,10 +9,6 @@ import de.germanycovid.discordbot.handlers.EventHandler;
 import de.germanycovid.discordbot.handlers.ServerListHandler;
 import de.germanycovid.discordbot.managers.*;
 import de.germanycovid.discordbot.objects.BotConfig;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
 
 import lombok.Getter;
 import net.dv8tion.jda.api.entities.Activity;
@@ -21,9 +17,6 @@ import net.dv8tion.jda.api.sharding.ShardManager;
 import net.dv8tion.jda.api.utils.ChunkingFilter;
 import net.dv8tion.jda.api.utils.MemberCachePolicy;
 import net.dv8tion.jda.api.utils.cache.CacheFlag;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
 /**
  *

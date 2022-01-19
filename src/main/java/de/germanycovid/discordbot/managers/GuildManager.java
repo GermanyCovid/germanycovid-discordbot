@@ -1,6 +1,7 @@
 package de.germanycovid.discordbot.managers;
 
 import com.mongodb.client.model.Filters;
+import com.mongodb.client.result.DeleteResult;
 import com.mongodb.client.result.UpdateResult;
 import de.germanycovid.discordbot.DiscordBot;
 import de.germanycovid.discordbot.objects.GuildData;
@@ -43,6 +44,13 @@ public class GuildManager {
     public void saveGuild(GuildData guildData) {
         Document document = this.discord.getGson().fromJson(this.discord.getGson().toJson(guildData), Document.class);
         this.discord.getMongoManager().getGuilds().replaceOne(Filters.eq("id", guildData.getId()), document, (UpdateResult t, Throwable thrwbl) -> {
+        });
+    }
+    
+    public void deleteGuild(String id) {
+        this.discord.getMongoManager().getGuilds().find(Filters.eq("id", id)).first((Document t, Throwable thrwbl) -> {
+            if(t == null) return;
+            this.discord.getMongoManager().getGuilds().deleteOne(t, (DeleteResult t1, Throwable thrwbl1) -> {});
         });
     }
     

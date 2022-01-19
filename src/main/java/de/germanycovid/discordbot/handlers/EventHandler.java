@@ -5,6 +5,7 @@ import de.germanycovid.discordbot.commands.*;
 
 import java.text.MessageFormat;
 import net.dv8tion.jda.api.entities.Message;
+import net.dv8tion.jda.api.events.guild.GuildLeaveEvent;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
@@ -92,6 +93,11 @@ public class EventHandler extends ListenerAdapter {
         }
         
         this.discordBot.consoleInfo(MessageFormat.format("[SHARD {0}] {1} ({2}) ran command {3} in {4} (#{5})", event.getJDA().getShardInfo().getShardId(), event.getAuthor().getName(), event.getAuthor().getId(), message.getContentRaw().toLowerCase().split(" ")[0], event.getGuild().getName(), event.getChannel().getName()));
+    }
+
+    @Override
+    public void onGuildLeave(GuildLeaveEvent event) {
+        this.discordBot.getGuildManager().deleteGuild(event.getGuild().getId());
     }
     
 }
