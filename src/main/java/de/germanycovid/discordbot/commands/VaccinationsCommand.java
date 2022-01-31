@@ -37,7 +37,7 @@ public class VaccinationsCommand {
         
         InputStream inputStream;
         try {
-            URLConnection url = new URL("https://api.germanycovid.de/images/vaccinations").openConnection();
+            URLConnection url = new URL("https://data.germanycovid.de/images/vaccinations.png").openConnection();
             url.addRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36");
             inputStream = url.getInputStream();
             event.getChannel().sendMessage("Die allgemeinen Statistiken werden unsererseits täglich um 14:00 Uhr (MESZ) aktualisiert.\nAn Sams-, Sonn- und Feiertagen werden keine Impfdaten übermittelt.").addFile(inputStream, "vaccinations.png", new AttachmentOption[0]).queue();

@@ -48,7 +48,7 @@ public class StatesCommand {
             case "map":
                 InputStream inputStream;
                 try {
-                    URLConnection url = new URL("https://api.germanycovid.de/images/states").openConnection();
+                    URLConnection url = new URL("https://data.germanycovid.de/images/states.png").openConnection();
                     url.addRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36");
                     inputStream = url.getInputStream();
                     event.getChannel().sendMessage("Diese Karte für die Bundesländer wird unsererseits täglich um 10:00 Uhr (MESZ) aktualisiert.").addFile(inputStream, "states.png", new AttachmentOption[0]).queue();
